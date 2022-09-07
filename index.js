@@ -82,10 +82,6 @@ io.on("connection", (socket) => {
   });
 });
 
-if(dev) {
-  httpServer.listen(process.env.PORT || 3002, () => {
-    console.log("running on 3002");
-  });
-}else{
-  module.exports = httpServer
-}
+httpServer.listen(process.env.PORT || 3002, () => {
+  console.log("running on 3002");
+});
