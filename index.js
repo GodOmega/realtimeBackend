@@ -44,10 +44,11 @@ app.get("/room", (req, res) => {
 });
 
 io.on("connection", (socket) => {
+  const randomIndex = randomNumber(0, colors.length - 1);
+  socket.color = colors[randomIndex]
+
   socket.on("add-nickname", (nickname) => {
-    const randomIndex = randomNumber(0, colors.length - 1);
     socket.nickname = nickname;
-    socket.color = colors[randomIndex]
   });
 
   socket.on("join-room", (room) => {
@@ -59,10 +60,10 @@ io.on("connection", (socket) => {
     socket.to(room).emit("user-connected", messageBody);
   });
 
-  socket.on("send-message", ({ message, room }) => {
+  socket.on("send-message", ({ message, room, username }) => {
     const messageBody = {
       message,
-      user: socket.nickname,
+      user: username,
       userColor: socket.color,
       messageType: "newMessage",
     };
