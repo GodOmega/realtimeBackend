@@ -81,6 +81,15 @@ io.on("connection", (socket) => {
   socket.on("pause-video", (room) => {
     socket.to(room).emit("pause-video");
   });
+
+  socket.on('sync', ({room, currentTime}) => {
+    io.in(room).emit("pause-video");
+    socket.to(room).emit('active-sync', currentTime)
+  })
+
+  socket.on('desactive-sync', (room) => {
+    io.in(room).emit('desactive-sync')
+  })
 });
 
 httpServer.listen(process.env.PORT || 3002, () => {
