@@ -84,7 +84,7 @@ io.on("connection", (socket) => {
 
   socket.on('sync', ({room, currentTime}) => {
     io.in(room).emit("pause-video");
-    socket.to(room).emit('active-sync', currentTime)
+    io.to(room).emit('active-sync', currentTime)
   })
 
   socket.on('desactive-sync', (room) => {
